@@ -104,6 +104,6 @@ module Frutas
 end
 
 #r = Frutas::Receive.new '/dev/ttyUSB0', 57600
-r = Frutas::Receive.new '/dev/cu.usbserial-A901AY24', 57600
+r = Frutas::Receive.new 'COM3', 57600
 r.run
 
