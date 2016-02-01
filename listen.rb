@@ -9,7 +9,9 @@ module PRI_FRUTAS
 			
 			@serial = PRI_FRUTAS::SerialAdapter.new ser_opt[:port], ser_opt[:baud]
 			@cache = PRI_FRUTAS::Cache.new cache_opt[:host], cache_opt[:port], 'pri_nodes', 'pri_reg'
+			
 			@serial.set_debug true
+			@cache.clear_table
 
 			@resp_timeout = resp_timeout
 		end
