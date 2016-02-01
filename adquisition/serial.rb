@@ -36,14 +36,18 @@ module PRI_FRUTAS
 
 			while (tf-ti).to_i < timeout_sec do
 				s = gets
-				puts "DATA get_next_data: #{s}" if @debug and !s.nil?
-				data = @p.decode_data s if s =~ @data_regex
-				return data if !data.nil?
-
+				if !s.nil? and s != ''
+					print "DATA get_next_data: #{s}" if @debug
+					data = @p.decode_data s if s =~ /(([A-z0-1])\w+:([0-9])\w+(\.[0-9])?;)+/ #@data_regex
+					if !data.nil?
+						puts if @debug
+						return data
+					end
+					print " <<-- rejected \n" if @debug
+				end
 				tf = Time.now
-				print "."
 			end
-
+			puts "INFO get_next_data: Timeout! #{(tf-ti).to_i} of #{timeout_sec} secs" if @debug
 			return data
 		end
 
@@ -52,16 +56,17 @@ module PRI_FRUTAS
 			@s.flush_input
 			loop do
 				s = gets
-				puts "DATA get_next_cmd: #{s}" if @debug and !s.nil?
-				data = @p.decode_cmd s if s =~ @cmd_regex
-				return data if !data.nil?
-				print ","
+				if !s.nil? and s != ''
+					puts "DATA get_next_cmd: #{s}" if @debug
+					data = @p.decode_cmd s if s =~ /([a-zA-Z])\w+;([a-zA-Z])\w+/ #@cmd_regex
+					return data if !data.nil?
+				end
 				sleep 1
 			end
 		end
 
 		def send_cmd cmd, station
-			s = "#{cmd}:#{station}"
+			s = "#{cmd};#{station}"
 			@s.write s if (!cmd.nil?) and (!station.nil?)
 			puts "DATA send_cmd: #{s}" if @debug
 		end

@@ -24,6 +24,7 @@ module PRI_FRUTAS
 					if ! d.nil?
 						@serial.send_cmd 'ok', c[:node_name]
 						puts d.to_json
+						@cache.update_node c[:node_name], d.to_json
 					end
 				end
 
@@ -33,8 +34,8 @@ module PRI_FRUTAS
 	end
 end
 
-ser_opt = {port: 'COM3', baud: 57600}
+ser_opt = {port: '/dev/ttyUSB0', baud: 57600}
 cache_opt = {host: 'localhost', port: 6379}
 
-lstnr = PRI_FRUTAS::Listener.new ser_opt, cache_opt, 40
+lstnr = PRI_FRUTAS::Listener.new ser_opt, cache_opt, 62
 lstnr.run
