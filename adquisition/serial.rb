@@ -78,7 +78,12 @@ module PRI_FRUTAS
 		private
 
 		def gets
-			return @s.gets.to_s.chomp
+      str = nil
+      begin
+        str = @s.gets.to_s.chomp
+      rescue Exception => e
+        puts "ERROR: Serial#gets: #{e.message}"
+      end
 		end
 	end
 end
