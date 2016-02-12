@@ -29,7 +29,10 @@ module PRI_FRUTAS
 						@cache.update_node c[:node_name], d.to_json
 					end
 				end
-
+				# send the command queue
+				while @cache.get_cmd_count > 0 do
+					@serial.send_raw_cmd @cache.get_cmd
+				end
 			end
 		end
 

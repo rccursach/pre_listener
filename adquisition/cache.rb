@@ -33,5 +33,13 @@ module PRI_FRUTAS
 		def insert_data
 
 		end
+
+		def get_cmd_count
+			return @db.llen 'pri_cmd'
+		end
+
+		def get_cmd
+			return @db.rpop 'pri_cmd'
+		end
 	end
 end

@@ -71,6 +71,11 @@ module PRI_FRUTAS
 			puts "DATA send_cmd: #{s}" if @debug
 		end
 
+		def send_raw_cmd cmd
+			@s.write cmd.to_s if (!cmd.nil?)
+			puts "DATA send_raw_cmd: #{cmd}" if @debug
+		end
+
 		def set_debug flag
 			@debug = flag === true ? flag : false
 		end
@@ -78,12 +83,12 @@ module PRI_FRUTAS
 		private
 
 		def gets
-      str = nil
-      begin
-        str = @s.gets.to_s.chomp
-      rescue Exception => e
-        puts "ERROR: Serial#gets: #{e.message}"
-      end
+			str = nil
+			begin
+				str = @s.gets.to_s.chomp
+			rescue Exception => e
+				puts "ERROR: Serial#gets: #{e.message}"
+			end
 		end
 	end
 end
