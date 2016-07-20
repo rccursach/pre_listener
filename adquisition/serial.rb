@@ -21,7 +21,7 @@ module PRI_FRUTAS
 
 				@p = PRI_FRUTAS::Parser.new
 
-			rescue Exception => e
+			rescue => e
 				puts e.message
 				#if no serialport exit with error
 				exit 1 if @s == nil
@@ -86,7 +86,7 @@ module PRI_FRUTAS
 			str = nil
 			begin
 				str = @s.gets.to_s.chomp
-			rescue Exception => e
+			rescue => e
 				puts "ERROR: Serial#gets: #{e.message}"
 			end
 		end

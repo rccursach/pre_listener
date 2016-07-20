@@ -15,7 +15,7 @@ module PRI_FRUTAS
 			
 			begin
 				@db = Redis.new(:host => db_host, :port => db_port)
-			rescue Exception => e
+			rescue => e
 				puts e.message
 				exit 1
 			end
